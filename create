@@ -8,24 +8,6 @@ CREATE TABLE darbinieki (
 	PRIMARY KEY(darbinieka_id)
 );
 
-CREATE TABLE darba_liguma_stavokli (
-	stavokla_kods int,
-	stavoklis nvarchar(10),
-	PRIMARY KEY(stavokla_kods)
-);
-
-CREATE TABLE darba_ligumi (
-	darba_liguma_numurs int IDENTITY(3000, 1),
-	darba_sakums date not null,
-	darba_beigas date null,
-	stundas_likme decimal(10, 2) not null,
-	darbinieka_id int not null,
-	stavokla_kods int not null,
-	FOREIGN KEY (darbinieka_id) REFERENCES darbinieki (darbinieka_id),
-	FOREIGN KEY (stavokla_kods) REFERENCES darba_liguma_stavokli (stavokla_kods),
-	PRIMARY KEY (darba_liguma_numurs)
-);
-
 
 CREATE TABLE nodalas (
 	nodalas_nosaukums nvarchar(50),
@@ -48,6 +30,26 @@ CREATE TABLE amati (
 	nodalas_nosaukums nvarchar(50),
 	FOREIGN KEY (nodalas_nosaukums) REFERENCES nodalas (nodalas_nosaukums),
 	PRIMARY KEY (amata_id)
+);
+
+CREATE TABLE darba_liguma_stavokli (
+	stavokla_kods int,
+	stavoklis nvarchar(40),
+	PRIMARY KEY(stavokla_kods)
+);
+
+CREATE TABLE darba_ligumi (
+	darba_liguma_numurs int IDENTITY(3000, 1),
+	darba_sakums date not null,
+	darba_beigas date null,
+	stundas_likme decimal(10, 2) not null,
+	darbinieka_id int not null,
+	stavokla_kods int not null,
+	amata_id int not null,
+	FOREIGN KEY (darbinieka_id) REFERENCES darbinieki (darbinieka_id),
+	FOREIGN KEY (stavokla_kods) REFERENCES darba_liguma_stavokli (stavokla_kods),
+	FOREIGN KEY (amata_id) REFERENCES amati (amata_id),
+	PRIMARY KEY (darba_liguma_numurs)
 );
 
 CREATE TABLE darba_ligumi_amati (
@@ -257,7 +259,7 @@ CREATE TABLE darba_sakumi_beigas (
 	veida_kods int not null,
 	darba_vietas_numurs int not null,
 	telpas_numurs int not null,
-	FOREIGN KEY (veida_kods) REFERENCES darba_sakuma_beigu_veids (veida_kods),
+	FOREIGN KEY (veida_kods) REFERENCES darba_sakumu_beigu_veids (veida_kods),
 	FOREIGN KEY (darbinieka_id) REFERENCES darbinieki (darbinieka_id),
 	FOREIGN KEY (darba_vietas_numurs,telpas_numurs) REFERENCES darba_vietas (darba_vietas_numurs,telpas_numurs),
 	PRIMARY KEY (registrets, darbinieka_id)	
