@@ -81,6 +81,7 @@ CREATE TABLE telpas (
 
 CREATE TABLE telpas_ires_cenas (
 	telpas_numurs int,
+	telpas_ires_cena decimal(10,2) not null,
 	FOREIGN KEY (telpas_numurs) REFERENCES telpas (telpas_numurs),
 	PRIMARY KEY (telpas_numurs)
 );
@@ -292,5 +293,6 @@ CREATE TABLE darba_sakumi_beigas (
 	telpas_numurs int not null,
 	FOREIGN KEY (veida_kods) REFERENCES darba_sakuma_beigu_veids (veida_kods),
 	FOREIGN KEY (darbinieka_id) REFERENCES darbinieki (darbinieka_id),
+	FOREIGN KEY (darba_vietas_numurs,telpas_numurs) REFERENCES darba_vietas (darba_vietas_numurs,telpas_numurs),
 	PRIMARY KEY (registrets, darbinieka_id)	
 );
