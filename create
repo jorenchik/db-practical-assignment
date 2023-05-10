@@ -258,7 +258,7 @@ CREATE TABLE darba_sakumi_beigas (
 	veida_kods int not null,
 	darba_vietas_numurs int not null,
 	telpas_numurs int not null,
-	FOREIGN KEY (veida_kods) REFERENCES darba_sakumu_beigu_veids (veida_kods),
+	FOREIGN KEY (veida_kods) REFERENCES darba_sakumu_beigu_veidi (veida_kods),
 	FOREIGN KEY (darbinieka_id) REFERENCES darbinieki (darbinieka_id),
 	FOREIGN KEY (darba_vietas_numurs,telpas_numurs) REFERENCES darba_vietas (darba_vietas_numurs,telpas_numurs),
 	PRIMARY KEY (registrets, darbinieka_id)	
