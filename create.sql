@@ -45,7 +45,6 @@ CREATE TABLE darba_ligumi (
 	stundas_likme decimal(10, 2) not null,
 	darbinieka_id int not null,
 	stavokla_kods int not null,
-	amata_id int not null,
 	FOREIGN KEY (darbinieka_id) REFERENCES darbinieki (darbinieka_id),
 	FOREIGN KEY (stavokla_kods) REFERENCES darba_liguma_stavokli (stavokla_kods),
 	PRIMARY KEY (darba_liguma_numurs)
@@ -155,9 +154,11 @@ CREATE TABLE rekina_stavokli (
 
 CREATE TABLE rekini (
 	rekina_numurs int IDENTITY(7000, 1),
+	telpas_ires_pieteikuma_numurs int not null, 
 	summa_bez_pvn int not null,
 	-- summa ar PVN ?
 	stavokla_kods int not null,
+	FOREIGN KEY (telpas_ires_pieteikuma_numurs) REFERENCES telpas_ires_pieteikumi (telpas_ires_pieteikuma_numurs),
 	FOREIGN KEY (stavokla_kods) REFERENCES rekina_stavokli (stavokla_kods),
 	PRIMARY KEY (rekina_numurs)
 );

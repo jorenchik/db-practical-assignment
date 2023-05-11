@@ -1,4 +1,5 @@
 --DELETE STATEMENTS
+
 DELETE FROM darba_sakumi_beigas;
 DELETE FROM darba_sakumu_beigu_veidi;
 DELETE FROM darba_vietas;
@@ -30,6 +31,7 @@ DELETE FROM nodalas;
 DELETE FROM darbinieki;
 
 -- DROP STATEMENTS
+
 DROP TABLE darba_sakumi_beigas;
 DROP TABLE darba_sakumu_beigu_veidi;
 DROP TABLE darba_vietas;
