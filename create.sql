@@ -8,7 +8,6 @@ CREATE TABLE darbinieki (
 	PRIMARY KEY(darbinieka_id)
 );
 
-
 CREATE TABLE nodalas (
 	nodalas_nosaukums nvarchar(50),
 	prieksnieka_id int not null,
@@ -27,8 +26,6 @@ CREATE TABLE nodalas_darbinieki (
 CREATE TABLE amati ( 
 	amata_id int,
 	amata_nosaukums nvarchar(50),
-	nodalas_nosaukums nvarchar(50),
-	FOREIGN KEY (nodalas_nosaukums) REFERENCES nodalas (nodalas_nosaukums),
 	PRIMARY KEY (amata_id)
 );
 
@@ -157,7 +154,6 @@ CREATE TABLE rekini (
 	rekina_numurs int IDENTITY(7000, 1),
 	telpas_ires_pieteikuma_numurs int not null, 
 	summa_bez_pvn int not null,
-	-- summa ar PVN ?
 	stavokla_kods int not null,
 	FOREIGN KEY (telpas_ires_pieteikuma_numurs) REFERENCES telpas_ires_pieteikumi (telpas_ires_pieteikuma_numurs),
 	FOREIGN KEY (stavokla_kods) REFERENCES rekina_stavokli (stavokla_kods),
@@ -227,7 +223,6 @@ CREATE TABLE darbinieki_pasakumi (
 	pasakuma_nosaukums nvarchar(50) not null,
 	FOREIGN KEY (darbinieka_id) REFERENCES darbinieki (darbinieka_id),
 	FOREIGN KEY (pasakuma_nosaukums, sakuma_laiks) REFERENCES pasakumi (pasakuma_nosaukums, sakuma_laiks),
-	--FOREIGN KEY (pasakuma_nosaukums) REFERENCES pasakumi (pasakuma_nosaukums),
 	PRIMARY KEY (darbinieka_id, sakuma_laiks, pasakuma_nosaukums)
 );
 
