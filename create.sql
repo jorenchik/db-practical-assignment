@@ -74,6 +74,7 @@ CREATE TABLE telpas (
 	ietilpigums bit not null,
 	pasakumu_iespeja bit not null,
 	darba_vietu_skaits int not null,
+	darbinieku_izmantosanas_iespeja bit not null,
 	nodalas_nosaukums nvarchar(50),
 	FOREIGN KEY (nodalas_nosaukums) REFERENCES nodalas (nodalas_nosaukums),
 	PRIMARY KEY(telpas_numurs)
@@ -255,7 +256,6 @@ CREATE TABLE darba_sakumu_beigu_veidi (
 CREATE TABLE darba_sakumi_beigas (
 	registrets datetime,
 	darbinieka_id int not null,
-	partraukuma_indikators bit not null,
 	veida_kods int not null,
 	darba_vietas_numurs int not null,
 	telpas_numurs int not null,
