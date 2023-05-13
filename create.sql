@@ -160,11 +160,6 @@ CREATE TABLE rekini (
 	PRIMARY KEY (rekina_numurs)
 );
 
-CREATE TABLE maksajuma_stavokli (
-	stavokla_kods int,
-	stavoklis nvarchar(30) not null,
-	PRIMARY KEY (stavokla_kods)
-);
 
 CREATE TABLE maksajumi (
 	maksajuma_numurs int IDENTITY(8000, 1),
@@ -172,9 +167,7 @@ CREATE TABLE maksajumi (
 	izpildijuma_laiks datetime not null,
 	maksatajs nvarchar (60) not null,
 	summa decimal(10, 2),
-	stavokla_kods int not null,
 	rekina_numurs int not null, 
-	FOREIGN KEY (stavokla_kods) REFERENCES maksajuma_stavokli (stavokla_kods),
 	FOREIGN KEY (rekina_numurs) REFERENCES rekini (rekina_numurs),
 	PRIMARY KEY (maksajuma_numurs)
 );
