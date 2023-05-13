@@ -68,11 +68,11 @@ CREATE TABLE telpas (
 	telpas_numurs int,
 	prezentesanas_iespeja bit not null,
 	iresanas_iespeja bit not null,
-	ietilpigums bit not null,
 	pasakumu_iespeja bit not null,
+	ietilpigums int not null,
 	darba_vietu_skaits int not null,
 	darbinieku_izmantosanas_iespeja bit not null,
-	nodalas_nosaukums nvarchar(50),
+	nodalas_nosaukums nvarchar(50) not null,
 	FOREIGN KEY (nodalas_nosaukums) REFERENCES nodalas (nodalas_nosaukums),
 	PRIMARY KEY(telpas_numurs)
 );
