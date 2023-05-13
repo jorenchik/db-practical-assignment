@@ -7,8 +7,7 @@ SELECT pp.pasakuma_nosaukums,pp.sakuma_laiks, pp.darbinieku_skaits, viesu_skaits
 	JOIN telpas t ON t.telpas_numurs = p.telpas_numurs
 ) pp 
 
-
--- 2. Atsakaite par nostrādātām stundām katrā dienā noteikā periodā
+-- 2.1. Atsakaite par nostrādātām stundām katrā dienā noteikā periodā
 SELECT dsb2.darbinieka_id, datepart(dd, dsb2.registrets) menesa_diena, max(kumul_nostradats_diena) nostradats FROM 
 (
 	SELECT darbinieka_id, registrets,
@@ -18,11 +17,49 @@ SELECT dsb2.darbinieka_id, datepart(dd, dsb2.registrets) menesa_diena, max(kumul
 WHERE registrets >= '2023-06-01 00:00:00' AND registrets < '2023-07-01 00:00:00'
 GROUP BY dsb2.darbinieka_id, datepart(dd, dsb2.registrets) 
 
--- 3. Atskaite (aktīvo) darbinieku algas rēķins
+-- 3. Atskaite (aktīvo) ar aprēķinātām darbinieku algām laika periodā un kontaktinformāciju
+
+DECLARE @PERIODA_SAKUMS datetime;
+SET @PERIODA_SAKUMS = '2023-06-01 00:00:00';
+DECLARE @PERIODA_BEIGAS datetime;
+SET @PERIODA_BEIGAS = '2023-06-30 00:00:00';
+
+WITH dl3 AS (SELECT dl1.darbinieka_id, (SELECT TOP 1 stundas_likme FROM (SELECT dl2.darbinieka_id, dl2.stundas_likme FROM darba_ligumi dl2 WHERE dl2.darba_sakums <= @PERIODA_SAKUMS AND dl2.darba_beigas >= @PERIODA_BEIGAS AND dl2.stavokla_kods = 1 AND dl2.darbinieka_id = dl1.darbinieka_id) dl) stundas_likme FROM darba_ligumi dl1)
+SELECT dsb3.darbinieka_id, sum(dsb3.nostradats) nostradats_laika_perioda, sum(dsb3.nostradats) * dl3.stundas_likme alga FROM (
+SELECT dsb2.darbinieka_id, datepart(dd, dsb2.registrets) menesa_diena, max(kumul_nostradats_diena) nostradats FROM 
+	(
+		SELECT darbinieka_id, registrets,
+			sum(DATEDIFF(minute,ieprieksejais_registrets, CASE WHEN dsbi.ieprieksejais_veida_kods not in (1,3) OR dsbi.veida_kods not in (2,4,5,6) OR dsbi.ieprieksejais_registrets IS NULL THEN dsbi.ieprieksejais_registrets ELSE dsbi.registrets END)) OVER (PARTITION BY darbinieka_id ORDER BY registrets) / 60.0 kumul_nostradats_diena
+		FROM (SELECT dsb.darbinieka_id, dsb.registrets, dsb.veida_kods, LAG(dsb.registrets) OVER(PARTITION BY dsb.darbinieka_id ORDER BY dsb.registrets) ieprieksejais_registrets, LAG(veida_kods) OVER(PARTITION BY dsb.darbinieka_id ORDER BY dsb.registrets) ieprieksejais_veida_kods FROM darba_sakumi_beigas dsb) dsbi
+	) dsb2
+	WHERE registrets >= @PERIODA_SAKUMS AND registrets <= @PERIODA_BEIGAS
+	GROUP BY dsb2.darbinieka_id, datepart(dd, dsb2.registrets)
+) dsb3
+JOIN dl3 ON dl3.darbinieka_id = dsb3.darbinieka_id
+GROUP BY dsb3.darbinieka_id, dl3.stundas_likme HAVING dl3.stundas_likme is NOT NULL;
 
 -- 4. Atskaite par telpām: vidējā atzīme, atsauksmju daudzums, ienesīgums, darbinieku izmantošanas daudzums
+--- TODO?: add worst review and best review
+SELECT t.telpas_numurs, sum(r.summa_bez_pvn * 1.00) ienesigums, cast(avg(ta.vertejums * 1.00) as numeric(36,2)) videja_atzime, RANK() OVER (ORDER BY cast(avg(ta.vertejums * 1.00) as numeric(36,2)) DESC) , min(ta.vertejums) zemaka_atzime, max(ta.vertejums) augstaka_atzime FROM telpas t
+	JOIN telpas_ires_pieteikumi tip ON tip.telpas_numurs = t.telpas_numurs
+	JOIN rekini r ON r.telpas_ires_pieteikuma_numurs = tip.telpas_ires_pieteikuma_numurs 
+	LEFT JOIN telpu_atsauksmes ta ON ta.telpas_ires_pieteikuma_numurs = tip.telpas_ires_pieteikuma_numurs 
+	WHERE r.stavokla_kods in (2, 6)
+	GROUP BY t.telpas_numurs;
 
--- 5. OVER Atskaite par noteiktā darbinieka iepriekšējo, nākamo, un aiznākamo vizīti: viesa kontakti, vizītes mērķis
+-- 5. Atskaite par noteiktā darbinieka iepriekšējo, nākamo, un aiznākamo vizīti: viesa kontakti, vizītes mērķis
+
+DECLARE @DARBINIEKA_ID datetime;
+SET @DARBINIEKA_ID=1031;
+
+WITH vp1 AS (
+SELECT vp.darbinieka_id, v.vards, v.uzvards, v.epasts, v.telefona_numurs, vp.sakuma_laiks, vps.stavokla_kods , vps.stavoklis  FROM vizites_pieteikumi vp
+JOIN viesi v ON vp.viesa_id = v.viesa_id
+JOIN vizites_pieteikuma_stavokli vps ON vps.stavokla_kods = vp.stavokla_kods 
+WHERE vp.stavokla_kods in (2,4,7)
+)
+SELECT * FROM (SELECT TOP 1 * FROM vp1 WHERE vp1.darbinieka_id = @DARBINIEKA_ID AND vp1.stavokla_kods = 7 ORDER BY vp1.sakuma_laiks DESC
+ UNION SELECT TOP 2 * FROM vp1 WHERE vp1.darbinieka_id = @DARBINIEKA_ID AND vp1.stavokla_kods in (2,4) ORDER BY vp1.sakuma_laiks ASC) vp3
 
 -- 6. Atskaite par darbiniekiem (izmantojot darba līgumus par pamatu), kas bija darbā noteiktā periodā: kurā telpā tie strādāja
 
