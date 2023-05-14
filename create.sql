@@ -134,7 +134,7 @@ CREATE TABLE telpas_ires_pieteikumi (
 );
 
 CREATE TABLE telpu_atsauksmes (
-	telpas_ires_pieteikuma_numurs int not null,
+	telpas_ires_pieteikuma_numurs int,
 	teksts nvarchar(MAX),
 	vertejums int not null,
 	viesa_id int not null, 
