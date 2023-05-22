@@ -379,21 +379,21 @@ INSERT INTO darba_ligumi_amati (darba_liguma_numurs, amata_id) VALUES
 	(3054, 10002);
    
 INSERT INTO telpas (telpas_numurs, prezentesanas_iespeja, iresanas_iespeja, pasakumu_iespeja, ietilpigums, darbinieku_izmantosanas_iespeja, nodalas_nosaukums) VALUES 
-	(101,1,0,1,28,0,N'Datorikas nodala'),
-	(102,1,0,1,28,1,N'Datorikas nodala'),
-	(103,1,0,1,33,0,N'Maksliga intelekta nodala'),
-	(104,1,0,0,28,1,N'Maksliga intelekta nodala'),
-	(105,1,0,1,23,1,N'Drošibas nodala'),
+	(101,1,1,1,28,0,N'Datorikas nodala'),
+	(102,1,1,1,28,1,N'Datorikas nodala'),
+	(103,1,1,1,33,0,N'Maksliga intelekta nodala'),
+	(104,1,1,0,28,1,N'Maksliga intelekta nodala'),
+	(105,1,1,1,23,1,N'Drošibas nodala'),
 	(106,1,0,1,28,1,N'Sistemu parvaldibas nodala'),
-	(107,1,0,1,33,1,N'Timekla tehnologiju nodala'),
-	(108,1,0,0,28,1,N'Timekla tehnologiju nodala'),
-	(109,1,0,1,9,0,N'Mobilas lietotnu nodala'),
-	(110,1,0,0,7,0,N'Mobilas lietotnu nodala'),
+	(107,1,1,1,33,1,N'Timekla tehnologiju nodala'),
+	(108,1,1,0,28,1,N'Timekla tehnologiju nodala'),
+	(109,1,1,1,9,0,N'Mobilas lietotnu nodala'),
+	(110,1,1,0,7,0,N'Mobilas lietotnu nodala'),
 	(201,1,0,0,11,0,N'Datu analizes nodala'),
 	(202,1,0,1,11,0,N'Programmaturas inženierijas nodala'),
 	(203,1,1,1,13,0,N'E-pakalpojumu nodala'),
 	(204,1,0,1,9,1,N'E-pakalpojumu nodala'),
-	(205,1,0,1,11,1,N'Infrastrukturas nodala'),
+	(205,1,1,1,11,1,N'Infrastrukturas nodala'),
 	(206,1,1,0,15,1,N'Telekomunikaciju nodala'),
 	(207,1,0,0,9,1,N'Telekomunikaciju nodala'),
 	(208,1,1,1,13,1,N'Lietotnu nodala'),
@@ -427,6 +427,7 @@ INSERT INTO telpas (telpas_numurs, prezentesanas_iespeja, iresanas_iespeja, pasa
 
 INSERT INTO telpas_ires_cenas (telpas_numurs, telpas_ires_cena) VALUES
 	(203, 7.50),
+	(205, 8.50),
 	(206, 12.75),
 	(208, 9.80),
 	(304, 10.20),
@@ -447,7 +448,14 @@ INSERT INTO telpas_ires_cenas (telpas_numurs, telpas_ires_cena) VALUES
 	(501, 6.50),
 	(502, 8.70),
 	(503, 14.50),
-	(504, 11.10);
+	(504, 11.10),
+	(101, 9.70),
+	(102, 11.50),
+	(103, 13.10),
+	(107, 14.10),
+	(108, 7.70),
+	(109, 13.50),
+	(110, 15.10);
 
 INSERT INTO viesi (vards, uzvards, epasts, konta_parole, telefona_numurs) VALUES 
 	('Anna', 'Berzina', 'anna.berzina@example.com', 'f847c10c1d92b7d160f878ab2948365c3959f42af886f83d1d60a1f03cfad0f4', '29292929'),
