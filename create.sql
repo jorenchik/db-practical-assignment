@@ -25,13 +25,13 @@ CREATE TABLE nodalas_darbinieki (
 
 CREATE TABLE amati ( 
 	amata_id int,
-	amata_nosaukums nvarchar(50),
+	amata_nosaukums nvarchar(50) not null UNIQUE,
 	PRIMARY KEY (amata_id)
 );
 
 CREATE TABLE darba_liguma_stavokli (
 	stavokla_kods int,
-	stavoklis nvarchar(40),
+	stavoklis nvarchar(40) not null UNIQUE,
 	PRIMARY KEY(stavokla_kods)
 );
 
@@ -87,15 +87,15 @@ CREATE TABLE viesi (
 	viesa_id int IDENTITY(4000, 1),
 	vards nvarchar(50) not null,
 	uzvards nvarchar(50) not null,
-	epasts nvarchar(50) not null,
+	epasts nvarchar(50) not null UNIQUE,
 	konta_parole varchar(64)  not null,
-	telefona_numurs char(8)  not null,
+	telefona_numurs char(8)  not null UNIQUE,
 	PRIMARY KEY (viesa_id)
 );
 
 CREATE TABLE vizites_pieteikuma_stavokli(
 	stavokla_kods int,
-	stavoklis nvarchar(30) not null,
+	stavoklis nvarchar(30) not null UNIQUE,
 	PRIMARY KEY (stavokla_kods)
 );
 
@@ -115,7 +115,7 @@ CREATE TABLE vizites_pieteikumi (
 
 CREATE TABLE telpas_ires_pieteikuma_stavokli(
 	stavokla_kods int,
-	stavoklis nvarchar(30) not null,
+	stavoklis nvarchar(30) not null UNIQUE,
 	PRIMARY KEY (stavokla_kods)
 );
 
@@ -145,7 +145,7 @@ CREATE TABLE telpu_atsauksmes (
 
 CREATE TABLE rekina_stavokli (
 	stavokla_kods int,
-	stavoklis nvarchar(30) not null,
+	stavoklis nvarchar(30) not null UNIQUE,
 	PRIMARY KEY (stavokla_kods)
 );
 
@@ -174,7 +174,7 @@ CREATE TABLE maksajumi (
 
 CREATE TABLE telpas_izmantosanas_pieteikuma_stavokli (
 	stavokla_kods int,
-	stavoklis nvarchar(30) not null,
+	stavoklis nvarchar(30) not null UNIQUE,
 	PRIMARY KEY (stavokla_kods)
 );
 
@@ -194,7 +194,7 @@ CREATE TABLE telpas_izmantosanas_pieteikumi (
 
 CREATE TABLE pasakuma_stavokli (
 	stavokla_kods int,
-	stavoklis nvarchar(30) not null,
+	stavoklis nvarchar(30) not null UNIQUE,
 	PRIMARY KEY (stavokla_kods)
 );
 

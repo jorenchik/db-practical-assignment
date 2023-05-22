@@ -156,9 +156,9 @@ INSERT INTO amati (amata_id, amata_nosaukums) VALUES
 	(10022, 'Sistēmu inženieris'),
 	(10023, 'Tīmekļa izstrādātājs'),
 	(10024, 'Mobilās lietotņu izstrādātājs'),
-	(10025, 'Drošības speciālists'),
+	(10025, 'Drošības analītiķis'),
 	(10026, 'Datu bāzu pārvaldnieks'),
-	(10027, 'Lietotāju atbalsta speciālists'),
+	(10027, 'Lietotāju atbalsta analītiķis'),
 	(10028, 'Produkta menedžeris'),
 	(10029, 'UX dizainers'),
 	(10030, 'Projektu vadītājs'),
@@ -499,7 +499,8 @@ INSERT INTO vizites_pieteikuma_stavokli (stavokla_kods, stavoklis) VALUES
 	(5, 'Nokavēts'),
 	(6, 'Gaida'),
 	(7, 'Pabeigts'),
-	(8, 'Atteikts');
+	(8, 'Atteikts'),
+	(9, 'Kļūdains');
 
 INSERT INTO vizites_pieteikumi (merkis, sakuma_laiks, beigu_laiks, stavokla_kods, viesa_id, darbinieka_id) VALUES 
 	('Klienta tikšanās', '2023-06-05 09:00:00', '2023-06-05 09:30:00', 7, 4002, 1032),
@@ -545,7 +546,8 @@ INSERT INTO telpas_ires_pieteikuma_stavokli (stavokla_kods, stavoklis) VALUES
 	(5, 'Nokavēts'),
 	(6, 'Gaida'),
 	(7, 'Pabeigts'),
-	(8, 'Atteikts');
+	(8, 'Atteikts'),
+	(9, 'Kļūdains');
 
 INSERT INTO telpas_ires_pieteikumi (merkis, sakuma_laiks, beigu_laiks, stavokla_kods, viesa_id, telpas_numurs) VALUES
 	 (N'Kolegu tikšanas','2023-06-05 09:00:00.000','2023-06-05 10:30:00.000',7,4009,203),
@@ -703,7 +705,8 @@ INSERT INTO telpas_izmantosanas_pieteikuma_stavokli (stavokla_kods, stavoklis) V
        (4, 'Atcelts'),
        (5, 'Apstiprināts'),
        (6, 'Gaida apstiprinājumu'),
-       (7, 'Pabeigts');
+       (7, 'Pabeigts'),
+	   (8, 'Kļūdains');
 
 INSERT INTO telpas_izmantosanas_pieteikumi (merkis, sakuma_laiks, beigu_laiks, stavokla_kods, darbinieka_id, telpas_numurs) VALUES 
 	('Mācību nodarbība', '2023-06-05 10:00:00', '2023-06-05 12:00:00', 7, 1000, 102),
