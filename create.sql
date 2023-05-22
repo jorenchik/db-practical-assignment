@@ -236,7 +236,7 @@ CREATE TABLE darba_vietas (
 
 CREATE TABLE darba_sakumu_beigu_veidi (
 	veida_kods int,
-	veids nvarchar(30) not null,
+	veids nvarchar(30) not null UNIQUE,
 	PRIMARY KEY (veida_kods)
 );
 
