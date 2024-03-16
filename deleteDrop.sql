@@ -1,4 +1,4 @@
---DELETE
+
 DELETE FROM darba_sakumi_beigas;
 DELETE FROM darba_sakumu_beigu_veidi;
 DELETE FROM darba_vietas;
@@ -26,6 +26,7 @@ DELETE FROM darba_liguma_stavokli;
 DELETE FROM amati;
 DELETE FROM nodalas_darbinieki;
 DELETE FROM nodalas;
+DELETE FROM faili;
 DELETE FROM darbinieki;
 
 -- DROP 
@@ -56,4 +57,5 @@ DROP TABLE darba_liguma_stavokli;
 DROP TABLE amati;
 DROP TABLE nodalas_darbinieki;
 DROP TABLE nodalas;
+DROP TABLE faili;
 DROP TABLE darbinieki;

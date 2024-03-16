@@ -1,5 +1,6 @@
 CREATE TABLE darbinieki (
-	darbinieka_id int IDENTITY(1000, 1),
+	darbinieka_id int AUTO_INCREMENT,
+    epasts varchar(128) UNIQUE,
 	vards nvarchar(20) not null,
 	uzvards nvarchar(20)  not null,
 	darba_telefona_numurs char(8)  not null,
@@ -7,6 +8,16 @@ CREATE TABLE darbinieki (
 	konta_parole char(64)  not null,
 	PRIMARY KEY(darbinieka_id)
 );
+ALTER TABLE darbinieki AUTO_INCREMENT=1000;
+
+CREATE TABLE faili (
+    faila_id int AUTO_INCREMENT,
+    faila_adrese varchar(256),
+    faila_autors int,
+    FOREIGN KEY (faila_autors) REFERENCES darbinieki (darbinieka_id),
+    PRIMARY KEY (faila_id)
+);
+
 
 CREATE TABLE nodalas (
 	nodalas_nosaukums nvarchar(50),
@@ -36,7 +47,7 @@ CREATE TABLE darba_liguma_stavokli (
 );
 
 CREATE TABLE darba_ligumi (
-	darba_liguma_numurs int IDENTITY(3000, 1),
+	darba_liguma_numurs int AUTO_INCREMENT,
 	darba_sakums date not null,
 	darba_beigas date null,
 	stundas_likme decimal(10, 2) not null,
@@ -46,6 +57,7 @@ CREATE TABLE darba_ligumi (
 	FOREIGN KEY (stavokla_kods) REFERENCES darba_liguma_stavokli (stavokla_kods),
 	PRIMARY KEY (darba_liguma_numurs)
 );
+ALTER TABLE darba_ligumi AUTO_INCREMENT=3000;
 
 CREATE TABLE darba_ligumi_amati (
 	darba_liguma_numurs int,
@@ -84,7 +96,7 @@ CREATE TABLE telpas_ires_cenas (
 );
 
 CREATE TABLE viesi (
-	viesa_id int IDENTITY(4000, 1),
+	viesa_id int AUTO_INCREMENT,
 	vards nvarchar(50) not null,
 	uzvards nvarchar(50) not null,
 	epasts nvarchar(50) not null UNIQUE,
@@ -92,6 +104,7 @@ CREATE TABLE viesi (
 	telefona_numurs char(8)  not null UNIQUE,
 	PRIMARY KEY (viesa_id)
 );
+ALTER TABLE viesi AUTO_INCREMENT=4000;
 
 CREATE TABLE vizites_pieteikuma_stavokli(
 	stavokla_kods int,
@@ -100,7 +113,7 @@ CREATE TABLE vizites_pieteikuma_stavokli(
 );
 
 CREATE TABLE vizites_pieteikumi (
-	vizites_pietiekuma_numurs int IDENTITY(5000, 1),
+	vizites_pietiekuma_numurs int AUTO_INCREMENT,
 	merkis nvarchar(100) not null,
 	sakuma_laiks datetime not null,
 	beigu_laiks datetime not null,
@@ -112,6 +125,7 @@ CREATE TABLE vizites_pieteikumi (
 	FOREIGN KEY (darbinieka_id) REFERENCES darbinieki (darbinieka_id),
 	PRIMARY KEY (vizites_pietiekuma_numurs)
 );
+ALTER TABLE vizites_pieteikumi AUTO_INCREMENT=5000;
 
 CREATE TABLE telpas_ires_pieteikuma_stavokli(
 	stavokla_kods int,
@@ -120,7 +134,7 @@ CREATE TABLE telpas_ires_pieteikuma_stavokli(
 );
 
 CREATE TABLE telpas_ires_pieteikumi (
-	telpas_ires_pieteikuma_numurs int IDENTITY(6000, 1),
+	telpas_ires_pieteikuma_numurs int AUTO_INCREMENT,
 	merkis nvarchar(100) not null,
 	sakuma_laiks datetime not null,
 	beigu_laiks datetime not null,
@@ -132,10 +146,11 @@ CREATE TABLE telpas_ires_pieteikumi (
 	FOREIGN KEY (telpas_numurs) REFERENCES telpas (telpas_numurs),
 	PRIMARY KEY (telpas_ires_pieteikuma_numurs)
 );
+ALTER TABLE telpas_ires_pieteikumi AUTO_INCREMENT=6000;
 
 CREATE TABLE telpu_atsauksmes (
 	telpas_ires_pieteikuma_numurs int,
-	teksts nvarchar(MAX),
+	teksts nvarchar(5000),
 	vertejums int not null,
 	viesa_id int not null, 
 	FOREIGN KEY (viesa_id) REFERENCES viesi (viesa_id),
@@ -150,7 +165,7 @@ CREATE TABLE rekina_stavokli (
 );
 
 CREATE TABLE rekini (
-	rekina_numurs int IDENTITY(7000, 1),
+	rekina_numurs int AUTO_INCREMENT,
 	telpas_ires_pieteikuma_numurs int not null, 
 	summa_bez_pvn int not null,
 	stavokla_kods int not null,
@@ -158,10 +173,11 @@ CREATE TABLE rekini (
 	FOREIGN KEY (stavokla_kods) REFERENCES rekina_stavokli (stavokla_kods),
 	PRIMARY KEY (rekina_numurs)
 );
+ALTER TABLE rekini AUTO_INCREMENT=7000;
 
 
 CREATE TABLE maksajumi (
-	maksajuma_numurs int IDENTITY(8000, 1),
+	maksajuma_numurs int AUTO_INCREMENT,
 	bankas_konts varchar(30) not null,
 	izpildijuma_laiks datetime not null,
 	maksatajs nvarchar (60) not null,
@@ -170,6 +186,7 @@ CREATE TABLE maksajumi (
 	FOREIGN KEY (rekina_numurs) REFERENCES rekini (rekina_numurs),
 	PRIMARY KEY (maksajuma_numurs)
 );
+ALTER TABLE maksajumi AUTO_INCREMENT=8000;
 
 
 CREATE TABLE telpas_izmantosanas_pieteikuma_stavokli (
@@ -179,7 +196,7 @@ CREATE TABLE telpas_izmantosanas_pieteikuma_stavokli (
 );
 
 CREATE TABLE telpas_izmantosanas_pieteikumi (
-	telpas_izmantosanas_pieteikuma_numurs int IDENTITY(9000, 1),
+	telpas_izmantosanas_pieteikuma_numurs int AUTO_INCREMENT,
 	merkis nvarchar(100) not null,
 	sakuma_laiks datetime not null,
 	beigu_laiks datetime not null,
@@ -191,6 +208,7 @@ CREATE TABLE telpas_izmantosanas_pieteikumi (
 	FOREIGN KEY (telpas_numurs) REFERENCES telpas (telpas_numurs),
 	PRIMARY KEY (telpas_izmantosanas_pieteikuma_numurs)	
 );
+ALTER TABLE telpas_izmantosanas_pieteikumi AUTO_INCREMENT=9000;
 
 CREATE TABLE pasakuma_stavokli (
 	stavokla_kods int,
